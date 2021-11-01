@@ -6,7 +6,7 @@ export default class ApiService{
     fetchCountry() {
     return fetch(`https://restcountries.com/v2/name/${this.searchInput}`)
         .then(response => { return response.json() })
-        // .then(country => { return country } );
+        // .then(({ country }) => { return country } );
     }
     
     get input() {
