@@ -9,7 +9,7 @@ import '@pnotify/core/dist/PNotify.css';
 const refs = {
     countryCards: document.querySelector('.country__cards'),
     input: document.querySelector('#name-input'),
-    countryList:document.querySelector('.countries-list__card'),
+    countryList:document.querySelector('.country__list'),
     cardsContainer: document.querySelector('.cards__container'),
 }
 
@@ -23,30 +23,29 @@ function inputChange(e) {
     apiService.input = e.target.value;
     
     apiService.fetchCountry()
-    .then(data => {
+        .then(data => {
         console.log(data)
         if (data.length === 1) {
             renderCountryCard(data);
+            clearConteiner();
         } else if (data.length <= 10) {
             renderCountryList(data);
+            clearConteiner();
         } else if (data.length >10) {
             error({
                 text: "Too many matches found.Please enter a more specific query!"
             });
             clearConteiner();
-                
-            } else if (data.message === 'Page Not Found') {
-                 error({
-                    text: "No country has been found. Please enter a more specific query!"
-                 });
+        } else if (data.message === 'Page Not Found') {
+            error({
+                text: "No country has been found. Please enter a more specific query!"
+            });
             clearConteiner();
-            }
-            
+        }
     })
     .catch(Error => Error({
         text: "You must enter query parameters!"
     }));
-    
 }
 
 
