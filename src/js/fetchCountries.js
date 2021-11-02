@@ -10,7 +10,8 @@ const refs = {
     countryCards: document.querySelector('.country__cards'),
     input: document.querySelector('#name-input'),
     countryList:document.querySelector('.country__list'),
-    cardsContainer: document.querySelector('.cards__container'),
+    cardsContainer: document.querySelector('.country__cards'),
+    listContainer: document.querySelector('.country__list'),
 }
 
 const apiService = new ApiService();
@@ -27,20 +28,22 @@ function inputChange(e) {
         console.log(data)
         if (data.length === 1) {
             renderCountryCard(data);
-            clearConteiner();
+            clearListConteiner();
         } else if (data.length <= 10) {
             renderCountryList(data);
-            clearConteiner();
+            clearCardsConteiner();
         } else if (data.length >10) {
             error({
                 text: "Too many matches found.Please enter a more specific query!"
             });
-            clearConteiner();
+            clearCardsConteiner();
+            clearListConteiner();
         } else if (data.message === 'Page Not Found') {
             error({
                 text: "No country has been found. Please enter a more specific query!"
             });
-            clearConteiner();
+            clearCardsConteiner();
+            clearListConteiner();
         }
     })
     .catch(Error => Error({
@@ -60,8 +63,10 @@ function renderCountryList(country) {
 }
 
 
-function clearConteiner() {
+function clearCardsConteiner() {
     refs.cardsContainer.innerHTML = '';
 }
-
+function clearListConteiner() {
+    refs.listContainer.innerHTML = '';
+}
  
